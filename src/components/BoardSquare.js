@@ -50,7 +50,8 @@ export class BoardSquare extends Component {
     const { x, y, connectDropTarget, isOver, canDrop } = this.props;
     const black = (x + y) % 2 === 1;
 
-    const squareHighlight = isOver ? <HighlightSquare color={canDrop ? 'yellow' : 'red'} /> : null;
+    const isValid = !isOver && canDrop && <HighlightSquare color="yellow" />;
+    const squareHighlight = isOver ? <HighlightSquare color={canDrop ? 'green' : 'red'} /> : null;
 
     return connectDropTarget(
       <div style={{
@@ -63,6 +64,7 @@ export class BoardSquare extends Component {
         </Square>
         {/* If hovered over display a yellow box */}
         {squareHighlight}
+        {isValid}
       </div>
     );
   }
