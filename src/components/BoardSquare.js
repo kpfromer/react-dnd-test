@@ -23,6 +23,23 @@ function collect(connect, monitor) {
   };
 }
 
+class HighlightSquare extends Component {
+  render() {
+    return (
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        height: '100%',
+        width: '100%',
+        zIndex: 1,
+        opacity: 0.5,
+        backgroundColor: this.props.color,
+      }} />
+    )
+  }
+}
+
 export class BoardSquare extends Component {
   static propTypes = {
     x: PropTypes.number.isRequired,
@@ -30,8 +47,11 @@ export class BoardSquare extends Component {
   };
 
   render() {
-    const { x, y, connectDropTarget, isOver } = this.props;
+    const { x, y, connectDropTarget, isOver, canDrop } = this.props;
     const black = (x + y) % 2 === 1;
+
+    const squareHighlight = isOver ? <HighlightSquare color={canDrop ? 'yellow' : 'red'} /> : null;
+
     return connectDropTarget(
       <div style={{
         position: 'relative',
@@ -42,18 +62,7 @@ export class BoardSquare extends Component {
           {this.props.children}
         </Square>
         {/* If hovered over display a yellow box */}
-        {isOver &&
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            height: '100%',
-            width: '100%',
-            zIndex: 1,
-            opacity: 0.5,
-            backgroundColor: 'yellow',
-          }} />
-        }
+        {squareHighlight}
       </div>
     );
   }
