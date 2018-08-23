@@ -17,11 +17,9 @@ const store = createStore(
 
 const rootEl = document.getElementById('root');
 
-observe(knightPosition =>
-  ReactDOM.render(
-    <Provider store={store}>
-      <Board knightPosition={knightPosition} />
-    </Provider>,
-    rootEl
-  )
-);
+ReactDOM.render(
+  <Provider store={store}>
+    <Board knightPosition={knightPosition} />
+  </Provider>,
+  rootEl
+)
