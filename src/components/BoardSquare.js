@@ -4,13 +4,34 @@ import Square from './Square';
 import { canMoveKnight, moveKnight } from './Game';
 import { ItemTypes } from './Constants';
 import { DropTarget } from 'react-dnd';
+import { movePiece } from '../actions/piece';
+import { connect } from 'react-redux';
+
+// TODO: MOVE TO OWN FILE
+const canMove = (piece, toX, toY) => {
+  const dx = piece.x - toX;
+  const dy = piece.y - toY;
+  switch(piece) {
+    case 'knight':
+      return (Math.abs(dx) === 2 && Math.abs(dy) === 1) ||
+        (Math.abs(dx) === 1 && Math.abs(dy) === 2);
+    default: 
+      return false
+  }
+}
 
 const squareTarget = {
-  canDrop(props) {
-    return canMoveKnight(props.x, props.y);
+  canDrop(props, monitor) {
+    // console.log(monitor.getItem());
+    // console.log(props.canMove(monitor.getItem()));
+    return props.canMove(monitor.getItem());
+    // return canMove(monitor.getItem(), props.x, props.y);
   },
   drop(props, monitor) {
-    moveKnight(props.x, props.y);
+    console.log(props);
+    const { pieceId, pieceType } = monitor.getItem();
+    console.log(monitor.getItem());
+    props.move(pieceId, pieceType, props.x, props.y);
   }
 };
 
@@ -47,7 +68,7 @@ export class BoardSquare extends Component {
   };
 
   render() {
-    const { x, y, connectDropTarget, isOver, canDrop } = this.props;
+    const { x, y, connectDropTarget, isOver, canDrop, test } = this.props;
     const black = (x + y) % 2 === 1;
 
     const isValid = !isOver && canDrop && <HighlightSquare color="yellow" />;
@@ -70,4 +91,4 @@ export class BoardSquare extends Component {
   }
 }
 
-export default DropTarget(ItemTypes.KNIGHT, squareTarget, collect)(BoardSquare);
+export default connect(undefined, { move: movePiece })(DropTarget(ItemTypes.KNIGHT, squareTarget, collect)(BoardSquare));
