@@ -21,10 +21,7 @@ export class Board extends Component {
     if (!piece) {
       return null;
     }
-    if (piece.pieceType === 'knight') {
-      return (
-        <Knight id={piece.pieceId} />
-      )
+    return <Piece id={piece.pieceId} type={piece.pieceType} />;
     } 
   }
 
