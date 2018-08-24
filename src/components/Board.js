@@ -15,24 +15,6 @@ export class Board extends Component {
     ).isRequired
   };
 
-  // renderPiece(x, y) {
-  //   const [knightX, knightY] = this.props.knightPosition;
-  //   if (x === knightX && y === knightY) {
-  //     return <Knight id={uuid()} />;
-  //   }
-  // }
-
-  // renderSquare(i) {
-  //   const x = i % 8;
-  //   const y = Math.floor(i / 8);
-  //   return (
-  //     <div key={i} onClick={() => this.handleSquareClick(x, y)}>
-  //       <BoardSquare x={x} y={y}>
-  //         {this.renderPiece(x, y)}
-  //       </BoardSquare>
-  //     </div>
-  //   );
-  // }
 
   renderPiece(x, y) {
     const piece = this.props.pieces[x][y];

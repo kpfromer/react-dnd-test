@@ -22,10 +22,7 @@ const canMove = (piece, toX, toY) => {
 
 const squareTarget = {
   canDrop(props, monitor) {
-    // console.log(monitor.getItem());
-    // console.log(props.canMove(monitor.getItem()));
     return props.canMove(monitor.getItem());
-    // return canMove(monitor.getItem(), props.x, props.y);
   },
   drop(props, monitor) {
     console.log(props);
